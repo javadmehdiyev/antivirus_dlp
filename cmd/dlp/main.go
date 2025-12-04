@@ -9,7 +9,7 @@ import (
 )
 
 func main() {
-	testFile := flag.String("file", "dlp_test_data.txt", "Path to test file")
+	testFile := flag.String("file", "test_dlp_data.txt", "Path to test file")
 	testURL := flag.String("url", "http://127.0.0.1:8080/antivirus/load-data", "Target URL for DLP check")
 	httpMethod := flag.String("method", "POST", "HTTP method (GET, POST, etc.)")
 	flag.Parse()
