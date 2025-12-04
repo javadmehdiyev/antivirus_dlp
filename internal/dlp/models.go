@@ -1,9 +1,10 @@
 package dlp
 
 type CheckRequest struct {
-	TestFile   string
-	TestURL    string
-	HTTPMethod string
+	TestFile      string
+	TestURL       string
+	HTTPMethod    string
+	FileExtension string // file extension to add to file_name
 }
 
 type CheckResponse struct {

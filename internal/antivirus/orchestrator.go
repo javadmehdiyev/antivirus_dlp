@@ -31,8 +31,9 @@ func (o *Orchestrator) RunAntivirusCheck(testFile, testURL, httpMethod, checkPat
 		}
 	}
 
-	// Generate file_name before creating request
-	fileName := time.Now().Format("2006_01_02_15_04_05")
+	// Generate file_name before creating request with file extension
+	fileExt := filepath.Ext(testFile)
+	fileName := time.Now().Format("2006_01_02_15_04_05") + fileExt
 
 	req := &CheckRequest{
 		TestFile:     string(fileContent),

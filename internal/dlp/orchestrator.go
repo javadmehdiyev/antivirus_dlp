@@ -2,6 +2,7 @@ package dlp
 
 import (
 	"os"
+	"path/filepath"
 )
 
 type Orchestrator struct {
@@ -23,10 +24,14 @@ func (o *Orchestrator) RunDLPCheck(testFile, testURL, httpMethod string) *Result
 		}
 	}
 
+	// Extract file extension
+	fileExt := filepath.Ext(testFile)
+
 	req := &CheckRequest{
-		TestFile:   string(fileContent),
-		TestURL:    testURL,
-		HTTPMethod: httpMethod,
+		TestFile:      string(fileContent),
+		TestURL:       testURL,
+		HTTPMethod:    httpMethod,
+		FileExtension: fileExt,
 	}
 
 	resp, err := o.client.SendRequest(req)

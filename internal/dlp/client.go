@@ -57,8 +57,11 @@ func (c *HTTPClient) buildRequest(req *CheckRequest) (*http.Request, error) {
 			return nil, fmt.Errorf("failed to write file content: %w", err)
 		}
 
-		// Add file_name field with current date/time in format: 2025_11_22_13_00_45 (with seconds)
+		// Add file_name field with current date/time in format: 2025_11_22_13_00_45 (with seconds) + extension
 		fileName := time.Now().Format("2006_01_02_15_04_05")
+		if req.FileExtension != "" {
+			fileName = fileName + req.FileExtension
+		}
 		err = writer.WriteField("file_name", fileName)
 		if err != nil {
 			return nil, fmt.Errorf("failed to write file_name field: %w", err)
