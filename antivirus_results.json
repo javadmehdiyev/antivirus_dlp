@@ -1,0 +1,12 @@
+{
+  "results": [
+    {
+      "timestamp": "2025-12-04T13:39:47.462853+04:00",
+      "file_name": "2025_12_04_13_39_42",
+      "status_text": "Request succeeded: 200 OK. File saved: /Users/togrul/Documents/redmantis/go/redmantisupdated/api/uploads/2025_12_04_13_39_42",
+      "is_virus_detected": false,
+      "file_exists": true,
+      "file_path": "/Users/togrul/Documents/redmantis/go/redmantisupdated/api/uploads/2025_12_04_13_39_42"
+    }
+  ]
+}
