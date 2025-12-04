@@ -9,8 +9,8 @@ import (
 )
 
 func main() {
-	testFile := flag.String("file", "", "Path to test file")
-	testURL := flag.String("url", "", "Target URL for antivirus check")
+	testFile := flag.String("file", "test_antivirus.js", "Path to test file")
+	testURL := flag.String("url", "http://127.0.0.1:8080/antivirus/load-data", "Target URL for antivirus check")
 	httpMethod := flag.String("method", "POST", "HTTP method (GET, POST, etc.)")
 	flag.Parse()
 
@@ -30,4 +30,3 @@ func main() {
 		os.Exit(1)
 	}
 }
-
