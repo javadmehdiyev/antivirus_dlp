@@ -1,5 +1,9 @@
 package dlp
 
+import (
+	"os"
+)
+
 type Orchestrator struct {
 	client *HTTPClient
 }
@@ -11,8 +15,16 @@ func NewOrchestrator() *Orchestrator {
 }
 
 func (o *Orchestrator) RunDLPCheck(testFile, testURL, httpMethod string) *Result {
+	fileContent, err := os.ReadFile(testFile)
+	if err != nil {
+		return &Result{
+			IsDLPActive: true,
+			StatusText:  "Failed to read file: " + err.Error(),
+		}
+	}
+
 	req := &CheckRequest{
-		TestFile:   testFile,
+		TestFile:   string(fileContent),
 		TestURL:    testURL,
 		HTTPMethod: httpMethod,
 	}
