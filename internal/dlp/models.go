@@ -1,5 +1,7 @@
 package dlp
 
+import "time"
+
 type CheckRequest struct {
 	TestFile      string
 	TestURL       string
@@ -15,4 +17,16 @@ type CheckResponse struct {
 type Result struct {
 	IsDLPActive bool
 	StatusText  string
+}
+
+// CheckResultEntry represents a single result entry stored in JSON
+type CheckResultEntry struct {
+	Timestamp   time.Time `json:"timestamp"`
+	StatusText  string    `json:"status_text"`
+	IsDLPActive bool      `json:"is_dlp_active"`
+}
+
+// CheckResultsHistory stores the history of check results
+type CheckResultsHistory struct {
+	Results []CheckResultEntry `json:"results"`
 }
