@@ -1,52 +1,36 @@
 {
   "results": [
     {
-      "timestamp": "2025-12-04T14:04:05.212821+04:00",
-      "file_name": "2025_12_04_14_04_00.js",
-      "status_text": "Request succeeded: 200 OK. File saved: /Users/togrul/Documents/redmantis/go/redmantisupdated/api/uploads/2025_12_04_14_04_00.js",
+      "timestamp": "2025-12-06T14:23:48.186002+04:00",
+      "file_name": "test_antivirus.js",
+      "status_text": "Request succeeded: 200 OK. File exists: uploads/test_antivirus.js",
       "is_virus_detected": false,
       "file_exists": true,
-      "file_path": "/Users/togrul/Documents/redmantis/go/redmantisupdated/api/uploads/2025_12_04_14_04_00.js"
+      "file_path": "uploads/test_antivirus.js"
     },
     {
-      "timestamp": "2025-12-05T17:16:24.858717+04:00",
-      "file_name": "2025_12_05_17_16_19.js",
-      "status_text": "Request succeeded: 200 OK. Failed to parse check response: http://127.0.0.1:8080/antivirus/check-data/2025_12_05_17_16_19.js",
-      "is_virus_detected": false,
-      "file_exists": false,
-      "file_path": "http://127.0.0.1:8080/antivirus/check-data/2025_12_05_17_16_19.js"
-    },
-    {
-      "timestamp": "2025-12-05T17:17:19.73918+04:00",
-      "file_name": "2025_12_05_17_17_14.js",
-      "status_text": "Request succeeded: 200 OK. Failed to parse check response: http://127.0.0.1:8080/antivirus/check-data/2025_12_05_17_17_14.js",
-      "is_virus_detected": false,
-      "file_exists": false,
-      "file_path": "http://127.0.0.1:8080/antivirus/check-data/2025_12_05_17_17_14.js"
-    },
-    {
-      "timestamp": "2025-12-05T17:18:52.222173+04:00",
-      "file_name": "2025_12_05_17_18_47.js",
-      "status_text": "Request succeeded: 200 OK. Failed to parse check response: http://127.0.0.1:8080/antivirus/check-data/2025_12_05_17_18_47.js",
-      "is_virus_detected": false,
-      "file_exists": false,
-      "file_path": "http://127.0.0.1:8080/antivirus/check-data/2025_12_05_17_18_47.js"
-    },
-    {
-      "timestamp": "2025-12-05T17:32:17.976271+04:00",
-      "file_name": "2025_12_05_17_32_12.js",
-      "status_text": "Request succeeded: 200 OK. File exists: http://127.0.0.1:8080/antivirus/check-data?file=2025_12_05_17_32_12.js",
+      "timestamp": "2025-12-06T14:24:02.453518+04:00",
+      "file_name": "test_antivirus.js",
+      "status_text": "Request succeeded: 200 OK. File exists: uploads/test_antivirus.js",
       "is_virus_detected": false,
       "file_exists": true,
-      "file_path": "http://127.0.0.1:8080/antivirus/check-data?file=2025_12_05_17_32_12.js"
+      "file_path": "uploads/test_antivirus.js"
     },
     {
-      "timestamp": "2025-12-06T12:36:44.816902+04:00",
-      "file_name": "2025_12_06_12_36_39.js",
-      "status_text": "Request succeeded: 200 OK. File exists: http://127.0.0.1:8080/antivirus/check-data?file=2025_12_06_12_36_39.js",
+      "timestamp": "2025-12-06T14:39:15.807377+04:00",
+      "file_name": "test_antivirus.js",
+      "status_text": "Request succeeded: 200 OK. File exists: uploads/test_antivirus.js",
       "is_virus_detected": false,
       "file_exists": true,
-      "file_path": "http://127.0.0.1:8080/antivirus/check-data?file=2025_12_06_12_36_39.js"
+      "file_path": "uploads/test_antivirus.js"
+    },
+    {
+      "timestamp": "2025-12-06T14:39:47.643088+04:00",
+      "file_name": "test_antivirus_data.txt",
+      "status_text": "Request succeeded: 200 OK. File exists: uploads/test_antivirus_data.txt",
+      "is_virus_detected": false,
+      "file_exists": true,
+      "file_path": "uploads/test_antivirus_data.txt"
     }
   ]
 }

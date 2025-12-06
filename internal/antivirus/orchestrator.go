@@ -3,9 +3,6 @@ package antivirus
 import (
 	"encoding/json"
 	"fmt"
-	"io"
-	"net/http"
-	"net/url"
 	"os"
 	"path/filepath"
 	"sync"
@@ -25,96 +22,67 @@ func NewOrchestrator() *Orchestrator {
 	}
 }
 
-func (o *Orchestrator) RunAntivirusCheck(testFile, testURL, httpMethod, checkUrl string) *Result {
-	fileContent, err := os.ReadFile(testFile)
-	if err != nil {
-		return &Result{
-			IsVirusDetected: true,
-			StatusText:      "Failed to read file: " + err.Error(),
-		}
-	}
-
-	// Generate file_name before creating request with file extension
-	fileExt := filepath.Ext(testFile)
-	fileName := time.Now().Format("2006_01_02_15_04_05") + fileExt
-
+func (o *Orchestrator) RunAntivirusCheck() *Result {
+	// Send GET request to http://127.0.0.1:8000/api/antivirus/download?type=file
 	req := &CheckRequest{
-		TestFile:     string(fileContent),
-		TestURL:      testURL,
-		HTTPMethod:   httpMethod,
-		SentFileName: fileName,
+		TestFile:     "", // No file content for GET
+		TestURL:      "http://127.0.0.1:8000/api/antivirus/download?type=file",
+		HTTPMethod:   "GET",
+		SentFileName: "",
 	}
 
 	resp, err := o.client.SendRequest(req)
 	result := EvaluateResult(resp, err)
 
 	fileExists := false
-	filePath := ""
+	var savedFilePath string
 
-	// Use file_name from response or from request (we always send one)
-	usedFileName := fileName
-	if resp != nil && resp.FileName != "" {
-		usedFileName = resp.FileName
-	}
+	// If request succeeded, save the file locally
+	if !result.IsVirusDetected && resp != nil && len(resp.Body) > 0 {
+		// Use file name from response or generate one with timestamp
+		fileName := resp.FileName
+		if fileName == "" {
+			fileName = time.Now().Format("2006_01_02_15_04_05") + ".txt"
+		}
 
-	// If request succeeded, save file_name and check file
-	if !result.IsVirusDetected && resp != nil {
-		// Save file_name to map
-		if usedFileName != "" {
-			o.mapMutex.Lock()
-			o.fileMap[usedFileName] = true
-			o.mapMutex.Unlock()
-
-			result.FileName = usedFileName
-
-			// Wait 5 seconds
-			time.Sleep(5 * time.Second)
-
-			// Check if file exists via HTTP request to checkUrl
-			if checkUrl != "" {
-				// Parse URL and add file as query parameter
-				parsedUrl, err := url.Parse(checkUrl)
-				if err == nil {
-					query := parsedUrl.Query()
-					query.Set("file", usedFileName)
-					parsedUrl.RawQuery = query.Encode()
-					checkUrlWithFile := parsedUrl.String()
-					filePath = checkUrlWithFile
-
-					// Make HTTP GET request to check if file exists
-					httpResp, err := http.Get(checkUrlWithFile)
-					if err == nil {
-						defer httpResp.Body.Close()
-
-						// Read response body
-						bodyBytes, err := io.ReadAll(httpResp.Body)
-						if err == nil {
-							// Parse JSON response
-							var jsonResp map[string]interface{}
-							if err := json.Unmarshal(bodyBytes, &jsonResp); err == nil {
-								// Check if "exists" field is true
-								if exists, ok := jsonResp["exists"].(bool); ok && exists {
-									fileExists = true
-									result.StatusText = fmt.Sprintf("Request succeeded: %s. File exists: %s", resp.StatusText, checkUrlWithFile)
-								} else {
-									result.StatusText = fmt.Sprintf("Request succeeded: %s. File not found at: %s", resp.StatusText, checkUrlWithFile)
-								}
-							} else {
-								result.StatusText = fmt.Sprintf("Request succeeded: %s. Failed to parse check response: %s", resp.StatusText, checkUrlWithFile)
-							}
-						} else {
-							result.StatusText = fmt.Sprintf("Request succeeded: %s. Failed to read check response: %s", resp.StatusText, checkUrlWithFile)
-						}
-					} else {
-						result.StatusText = fmt.Sprintf("Request succeeded: %s. Failed to check file existence: %s", resp.StatusText, err.Error())
-					}
-				} else {
-					result.StatusText = fmt.Sprintf("Request succeeded: %s. Failed to parse check URL: %s", resp.StatusText, err.Error())
-				}
+		// Create uploads directory if it doesn't exist
+		uploadsDir := "uploads"
+		if err := os.MkdirAll(uploadsDir, 0755); err != nil {
+			return &Result{
+				IsVirusDetected: true,
+				StatusText:      "Failed to create uploads directory: " + err.Error(),
 			}
 		}
+
+		// Save file to uploads directory
+		savedFilePath = filepath.Join(uploadsDir, fileName)
+		if err := os.WriteFile(savedFilePath, resp.Body, 0644); err != nil {
+			return &Result{
+				IsVirusDetected: true,
+				StatusText:      "Failed to save file: " + err.Error(),
+			}
+		}
+
+		result.FileName = fileName
+		result.FilePath = savedFilePath
+
+		// Wait 5 seconds
+		time.Sleep(5 * time.Second)
+
+		// Check if file still exists
+		if _, err := os.Stat(savedFilePath); err == nil {
+			fileExists = true
+			result.StatusText = fmt.Sprintf("Request succeeded: %s. File exists: %s", resp.StatusText, savedFilePath)
+		} else {
+			fileExists = false
+			result.StatusText = fmt.Sprintf("Request succeeded: %s. File not found: %s", resp.StatusText, savedFilePath)
+		}
+
 		result.FileExists = fileExists
-		result.FilePath = filePath
+	} else if !result.IsVirusDetected && resp != nil {
+		// Request succeeded but no file content
+		result.FileExists = false
+		result.StatusText = fmt.Sprintf("Request succeeded: %s. No file content received", resp.StatusText)
 	}
 
 	return result

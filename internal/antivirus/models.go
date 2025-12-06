@@ -13,6 +13,7 @@ type CheckResponse struct {
 	StatusCode int
 	StatusText string
 	FileName   string // file_name from server response
+	Body       []byte // response body for GET requests (file content)
 }
 
 type Result struct {
@@ -36,4 +37,19 @@ type CheckResultEntry struct {
 // CheckResultsHistory stores the history of check results
 type CheckResultsHistory struct {
 	Results []CheckResultEntry `json:"results"`
+}
+
+// AntivirusAPIResponse represents the response from /api/antivirus endpoint
+type AntivirusAPIResponse struct {
+	Success bool             `json:"success"`
+	Data    AntivirusAPIData `json:"data"`
+}
+
+// AntivirusAPIData represents the data field in the API response
+type AntivirusAPIData struct {
+	File        string `json:"file"`
+	FileContent string `json:"file_content"`
+	URL         string `json:"url"`
+	Method      string `json:"method"`
+	JSON        string `json:"json"`
 }
