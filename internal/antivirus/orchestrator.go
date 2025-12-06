@@ -3,6 +3,9 @@ package antivirus
 import (
 	"encoding/json"
 	"fmt"
+	"io"
+	"net/http"
+	"net/url"
 	"os"
 	"path/filepath"
 	"sync"
@@ -22,7 +25,7 @@ func NewOrchestrator() *Orchestrator {
 	}
 }
 
-func (o *Orchestrator) RunAntivirusCheck(testFile, testURL, httpMethod, checkPath string) *Result {
+func (o *Orchestrator) RunAntivirusCheck(testFile, testURL, httpMethod, checkUrl string) *Result {
 	fileContent, err := os.ReadFile(testFile)
 	if err != nil {
 		return &Result{
@@ -67,14 +70,46 @@ func (o *Orchestrator) RunAntivirusCheck(testFile, testURL, httpMethod, checkPat
 			// Wait 5 seconds
 			time.Sleep(5 * time.Second)
 
-			// Check if file exists at checkPath with name file_name
-			if checkPath != "" {
-				filePath = filepath.Join(checkPath, usedFileName)
-				if _, err := os.Stat(filePath); err == nil {
-					fileExists = true
-					result.StatusText = fmt.Sprintf("Request succeeded: %s. File saved: %s", resp.StatusText, filePath)
+			// Check if file exists via HTTP request to checkUrl
+			if checkUrl != "" {
+				// Parse URL and add file as query parameter
+				parsedUrl, err := url.Parse(checkUrl)
+				if err == nil {
+					query := parsedUrl.Query()
+					query.Set("file", usedFileName)
+					parsedUrl.RawQuery = query.Encode()
+					checkUrlWithFile := parsedUrl.String()
+					filePath = checkUrlWithFile
+
+					// Make HTTP GET request to check if file exists
+					httpResp, err := http.Get(checkUrlWithFile)
+					if err == nil {
+						defer httpResp.Body.Close()
+
+						// Read response body
+						bodyBytes, err := io.ReadAll(httpResp.Body)
+						if err == nil {
+							// Parse JSON response
+							var jsonResp map[string]interface{}
+							if err := json.Unmarshal(bodyBytes, &jsonResp); err == nil {
+								// Check if "exists" field is true
+								if exists, ok := jsonResp["exists"].(bool); ok && exists {
+									fileExists = true
+									result.StatusText = fmt.Sprintf("Request succeeded: %s. File exists: %s", resp.StatusText, checkUrlWithFile)
+								} else {
+									result.StatusText = fmt.Sprintf("Request succeeded: %s. File not found at: %s", resp.StatusText, checkUrlWithFile)
+								}
+							} else {
+								result.StatusText = fmt.Sprintf("Request succeeded: %s. Failed to parse check response: %s", resp.StatusText, checkUrlWithFile)
+							}
+						} else {
+							result.StatusText = fmt.Sprintf("Request succeeded: %s. Failed to read check response: %s", resp.StatusText, checkUrlWithFile)
+						}
+					} else {
+						result.StatusText = fmt.Sprintf("Request succeeded: %s. Failed to check file existence: %s", resp.StatusText, err.Error())
+					}
 				} else {
-					result.StatusText = fmt.Sprintf("Request succeeded: %s. File not found at: %s", resp.StatusText, filePath)
+					result.StatusText = fmt.Sprintf("Request succeeded: %s. Failed to parse check URL: %s", resp.StatusText, err.Error())
 				}
 			}
 		}

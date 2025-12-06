@@ -65,3 +65,4 @@ Examples:
 3. Checks if the request was blocked (error = virus detected)
 4. Returns result indicating if virus was detected
 
+

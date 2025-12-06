@@ -18,3 +18,4 @@ function testFunction() {
 var url = "http://example.com/test";
 fetch(url).then(response => response.text());
 
+
