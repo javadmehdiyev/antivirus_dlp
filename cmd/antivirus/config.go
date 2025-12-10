@@ -6,6 +6,7 @@ import (
 	"io"
 	"net/http"
 	"os"
+	"strings"
 )
 
 type SettingsResponse struct {
@@ -21,7 +22,11 @@ type SettingsData struct {
 func getAntivirusURL() string {
 	antivirusIP := getIp()
 	fmt.Printf("Antivirus IP: %s\n", antivirusIP)
+
+	// Remove trailing slashes and construct proper URL
+	antivirusIP = strings.TrimSuffix(antivirusIP, "/")
 	settingsURL := antivirusIP + ":8000/api/settings-agent"
+	fmt.Printf("Settings request URL: %s\n", settingsURL)
 
 	resp, err := http.Get(settingsURL)
 	if err != nil {
@@ -36,13 +41,29 @@ func getAntivirusURL() string {
 		os.Exit(1)
 	}
 
+	// Check if response is actually JSON
+	if len(body) > 0 && body[0] != '{' && body[0] != '[' {
+		fmt.Printf("Error: Server returned non-JSON response (status: %d)\n", resp.StatusCode)
+		fmt.Printf("Response preview: %s\n", string(body[:min(200, len(body))]))
+		os.Exit(1)
+	}
+
 	var settingsResp SettingsResponse
 	if err := json.Unmarshal(body, &settingsResp); err != nil {
 		fmt.Printf("Error: Failed to parse settings response: %v\n", err)
+		fmt.Printf("Response status: %d\n", resp.StatusCode)
+		fmt.Printf("Response body: %s\n", string(body))
 		os.Exit(1)
 	}
 
 	antivirusURL := settingsResp.Data.URLAntivirus
-	fmt.Printf("Settings URL: %s\n", antivirusURL)
+	fmt.Printf("Antivirus service URL: %s\n", antivirusURL)
 	return antivirusURL
+}
+
+func min(a, b int) int {
+	if a < b {
+		return a
+	}
+	return b
 }
