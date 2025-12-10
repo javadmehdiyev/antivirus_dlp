@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"os"
 	"path/filepath"
+	"strings"
 	"time"
 )
 
@@ -41,8 +42,25 @@ func (o *Orchestrator) RunDLPCheck(testFile, testURL, httpMethod string) *Result
 	return EvaluateResult(resp, err)
 }
 
+// getCategory determines the category based on file name
+func getCategory(fileName string) string {
+	baseName := strings.ToLower(filepath.Base(fileName))
+
+	if strings.Contains(baseName, "credit_card") {
+		return "credit_card"
+	} else if strings.Contains(baseName, "passport") {
+		return "passport_number"
+	} else if strings.HasSuffix(baseName, ".csv") {
+		return "file_upload_csv"
+	} else if strings.HasSuffix(baseName, ".xlsx") {
+		return "file_upload_xlsx"
+	}
+
+	return "unknown"
+}
+
 // SaveResultToJSON saves the result to JSON file, keeping only last 15 entries
-func (o *Orchestrator) SaveResultToJSON(result *Result, jsonFilePath string) error {
+func (o *Orchestrator) SaveResultToJSON(result *Result, jsonFilePath string, fileName string) error {
 	history := &CheckResultsHistory{
 		Results: []CheckResultEntry{},
 	}
@@ -56,10 +74,13 @@ func (o *Orchestrator) SaveResultToJSON(result *Result, jsonFilePath string) err
 	}
 
 	// Create new entry
+	category := getCategory(fileName)
 	entry := CheckResultEntry{
 		Timestamp:   time.Now(),
 		StatusText:  result.StatusText,
 		IsDLPActive: result.IsDLPActive,
+		FileName:    filepath.Base(fileName),
+		Category:    category,
 	}
 
 	// Add new entry

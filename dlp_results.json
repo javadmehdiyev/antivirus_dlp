@@ -1,24 +1,32 @@
 {
   "results": [
     {
-      "timestamp": "2025-12-10T16:56:39.24674+04:00",
+      "timestamp": "2025-12-10T17:05:22.81953+04:00",
       "status_text": "Request succeeded: 200 OK",
-      "is_dlp_active": false
+      "is_dlp_active": false,
+      "file_name": "test_credit_card.txt",
+      "category": "credit_card"
     },
     {
-      "timestamp": "2025-12-10T16:56:39.252417+04:00",
+      "timestamp": "2025-12-10T17:05:22.826499+04:00",
       "status_text": "Request succeeded: 200 OK",
-      "is_dlp_active": false
+      "is_dlp_active": false,
+      "file_name": "test_passport.txt",
+      "category": "passport_number"
     },
     {
-      "timestamp": "2025-12-10T16:56:39.257664+04:00",
+      "timestamp": "2025-12-10T17:05:22.83308+04:00",
       "status_text": "Request succeeded: 200 OK",
-      "is_dlp_active": false
+      "is_dlp_active": false,
+      "file_name": "test_dlp_data.csv",
+      "category": "file_upload_csv"
     },
     {
-      "timestamp": "2025-12-10T16:56:39.262418+04:00",
+      "timestamp": "2025-12-10T17:05:22.839189+04:00",
       "status_text": "Request succeeded: 200 OK",
-      "is_dlp_active": false
+      "is_dlp_active": false,
+      "file_name": "test_dlp_data.xlsx",
+      "category": "file_upload_xlsx"
     }
   ]
 }

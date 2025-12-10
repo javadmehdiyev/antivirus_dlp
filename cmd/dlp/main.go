@@ -64,7 +64,7 @@ func main() {
 		result := orchestrator.RunDLPCheck(file, *testURL, *httpMethod)
 
 		// Save result to JSON file
-		if err := orchestrator.SaveResultToJSON(result, *jsonFile); err != nil {
+		if err := orchestrator.SaveResultToJSON(result, *jsonFile, file); err != nil {
 			fmt.Printf("Warning: Failed to save result to JSON: %v\n", err)
 		}
 

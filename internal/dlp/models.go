@@ -24,6 +24,8 @@ type CheckResultEntry struct {
 	Timestamp   time.Time `json:"timestamp"`
 	StatusText  string    `json:"status_text"`
 	IsDLPActive bool      `json:"is_dlp_active"`
+	FileName    string    `json:"file_name"`
+	Category    string    `json:"category"`
 }
 
 // CheckResultsHistory stores the history of check results
