@@ -4,6 +4,16 @@
       "timestamp": "2025-12-10T13:08:32.645399+04:00",
       "status_text": "DLP blocked request: failed to execute request: Post \"http://127.0.0.1:8080/api/dlp/send-data\": dial tcp 127.0.0.1:8080: connect: connection refused",
       "is_dlp_active": true
+    },
+    {
+      "timestamp": "2025-12-10T14:29:38.461423+04:00",
+      "status_text": "DLP blocked request: failed to execute request: Post \"http://127.0.0.1:8080/api/dlp/send-data\": dial tcp 127.0.0.1:8080: connect: connection refused",
+      "is_dlp_active": true
+    },
+    {
+      "timestamp": "2025-12-10T14:30:01.712183+04:00",
+      "status_text": "Request succeeded: 405 Method Not Allowed",
+      "is_dlp_active": false
     }
   ]
 }

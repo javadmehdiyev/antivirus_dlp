@@ -7,6 +7,14 @@
       "is_virus_detected": false,
       "file_exists": true,
       "file_path": "uploads/2025_12_10_13_08_40.txt"
+    },
+    {
+      "timestamp": "2025-12-10T14:29:53.759149+04:00",
+      "file_name": "2025_12_10_14_29_48.txt",
+      "status_text": "Request succeeded: 404 Not Found. File exists: uploads/2025_12_10_14_29_48.txt",
+      "is_virus_detected": false,
+      "file_exists": true,
+      "file_path": "uploads/2025_12_10_14_29_48.txt"
     }
   ]
 }

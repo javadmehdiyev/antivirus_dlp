@@ -9,11 +9,16 @@ import (
 )
 
 func main() {
+
+	AntivirusIP := getIp()
+	fmt.Printf("Antivirus IP: %s\n", AntivirusIP)
+	settingUrl := AntivirusIP + ":8000/api/settings-agent"
+
 	jsonFile := flag.String("json", "antivirus_results.json", "Path to JSON file to store results")
 	flag.Parse()
 
 	orchestrator := antivirus.NewOrchestrator()
-	result := orchestrator.RunAntivirusCheck()
+	result := orchestrator.RunAntivirusCheck(settingUrl)
 
 	// Save result to JSON file
 	if err := orchestrator.SaveResultToJSON(result, *jsonFile); err != nil {
