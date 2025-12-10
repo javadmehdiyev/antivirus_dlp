@@ -1,6 +1,6 @@
 # Antivirus Agent
 
-Agent for testing antivirus systems. Checks if antivirus detects viruses or malware in files.
+Agent for testing antivirus systems. Checks if antivirus detects viruses or malware in downloaded files.
 
 ## Build
 
@@ -12,58 +12,62 @@ go build -o antivirus ./cmd/antivirus
 
 ```bash
 # Run with go run
-go run cmd/antivirus/main.go -file <path> -url <url> [-method <HTTP_METHOD>]
+go run cmd/antivirus/main.go [-json <json_file>]
 
 # Run compiled binary
-./antivirus -file <path> -url <url> [-method <HTTP_METHOD>]
+./antivirus [-json <json_file>]
 ```
 
 ## Parameters
 
-- `-file` - Path to test file (required)
-- `-url` - Antivirus service URL (required)
-- `-method` - HTTP method: GET, POST, PUT, etc. (default: POST)
+- `-json` - Path to JSON file to store results (default: `antivirus_results.json`)
+
+## Configuration
+
+The agent automatically retrieves the antivirus service URL from the settings API:
+- Settings endpoint: `http://127.0.0.1:8000/api/settings-agent`
+- The agent fetches the `url_antivirus` from the settings response
 
 ## Examples
 
 ```bash
-# Test with JavaScript file
-./antivirus -file test_antivirus.js -url https://antivirus-service.com/scan -method POST
+# Run with default JSON output file
+./antivirus
 
-# Test with PowerShell script
-./antivirus -file test_antivirus.ps1 -url https://antivirus-service.com/scan -method POST
-
-# Test with shell script
-./antivirus -file test_antivirus.sh -url https://antivirus-service.com/scan -method POST
+# Run with custom JSON output file
+./antivirus -json custom_results.json
 ```
-
-## Test Files
-
-Use files that might contain suspicious patterns:
-- Executable files (.exe, .dll)
-- Scripts (.js, .ps1, .sh)
-- Archives (.zip, .rar)
-- Files with encoded content
-
-Examples:
-- `test_antivirus.js` - JavaScript with suspicious patterns
-- `test_antivirus.ps1` - PowerShell script
-- `test_antivirus.sh` - Bash script
-- `test_antivirus_data.txt` - EICAR-like pattern
-
-## Output
-
-- `Virus Detected: false` - Antivirus did not detect virus, file sent successfully
-- `Virus Detected: true` - Antivirus detected virus and blocked the request
-- Exit code `0` - Request succeeded
-- Exit code `1` - Virus detected
 
 ## How It Works
 
-1. Reads the test file content
-2. Sends HTTP request with file content to antivirus service
-3. Checks if the request was blocked (error = virus detected)
-4. Returns result indicating if virus was detected
+1. Retrieves antivirus service URL from settings API (`http://127.0.0.1:8000/api/settings-agent`)
+2. Sends GET request to download a file from the antivirus service endpoint
+3. If download succeeds, saves the file to `uploads/` directory
+4. Waits 5 seconds and checks if the file still exists
+5. If file was deleted, antivirus detected a virus
+6. Returns result indicating if virus was detected
+
+## Output
+
+- `Virus Detected: false` - Antivirus did not detect virus, file downloaded and still exists
+- `Virus Detected: true` - Antivirus detected virus and deleted the file
+- `File Name: <name>` - Name of the downloaded file (if available)
+- `File Path: <path>` - Path where file was saved (if available)
+- `File Exists: <true/false>` - Whether file still exists after 5 seconds
+- `Status: <message>` - Detailed status message
+- Exit code `0` - No virus detected
+- Exit code `1` - Virus detected
+
+## Results Storage
+
+Results are saved to a JSON file (default: `antivirus_results.json`) with the following structure:
+- Timestamp of the check
+- File name and path
+- Status text
+- Virus detection result
+- File existence status
+
+The JSON file keeps only the last 15 entries.
 
 
 
