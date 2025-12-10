@@ -10,7 +10,7 @@ import (
 
 func main() {
 	testFile := flag.String("file", "test_dlp_data.txt", "Path to test file")
-	testURL := flag.String("url", "http://127.0.0.1:8080/antivirus/load-data", "Target URL for DLP check")
+	testURL := flag.String("url", "http://127.0.0.1:8080/api/dlp/send-data", "Target URL for DLP check")
 	httpMethod := flag.String("method", "POST", "HTTP method (GET, POST, etc.)")
 	jsonFile := flag.String("json", "dlp_results.json", "Path to JSON file to store results")
 	flag.Parse()
