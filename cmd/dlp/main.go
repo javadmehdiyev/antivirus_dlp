@@ -9,10 +9,7 @@ import (
 )
 
 func main() {
-	DlpIP := getIp()
-	fmt.Printf("DLP IP: %s\n", DlpIP)
-	//settingUrl := DlpIP + ":8000/api/dlp/send-data"
-	settingUrl := DlpIP + ":8000/api/settings-agent"
+	settingUrl := getDLPURL()
 
 	testFile := flag.String("file", "test_dlp_data.txt", "Path to test file")
 	testURL := flag.String("url", settingUrl, "Target URL for DLP check")

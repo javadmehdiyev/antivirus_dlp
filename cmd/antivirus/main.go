@@ -9,10 +9,7 @@ import (
 )
 
 func main() {
-
-	AntivirusIP := getIp()
-	fmt.Printf("Antivirus IP: %s\n", AntivirusIP)
-	settingUrl := AntivirusIP + ":8000/api/settings-agent"
+	settingUrl := getAntivirusURL()
 
 	jsonFile := flag.String("json", "antivirus_results.json", "Path to JSON file to store results")
 	flag.Parse()

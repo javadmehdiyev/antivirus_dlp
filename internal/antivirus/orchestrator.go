@@ -26,7 +26,7 @@ func (o *Orchestrator) RunAntivirusCheck(settingUrl string) *Result {
 	// Send GET request to http://127.0.0.1:8000/api/antivirus/download?type=file
 	req := &CheckRequest{
 		TestFile:     "", // No file content for GET
-		TestURL:      settingUrl + "/api/antivirus/download?type=file",
+		TestURL:      settingUrl,
 		HTTPMethod:   "GET",
 		SentFileName: "",
 	}
