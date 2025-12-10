@@ -7,6 +7,8 @@ import (
 	"net/http"
 	"os"
 	"strings"
+
+	"github.com/xuri/excelize/v2"
 )
 
 type SettingsResponse struct {
@@ -66,4 +68,44 @@ func min(a, b int) int {
 		return a
 	}
 	return b
+}
+func createCreditCardFile(fileName string) error {
+	content := `John Doe
+                12345
+                $50000
+                john.doe@example.com
+                4532-1234-5678-9010
+                123-45-6789
+                01/15/1980
+                `
+	return os.WriteFile(fileName, []byte(content), 0644)
+}
+func createPassportFile(path string) error {
+	content := `John Doe
+                AB1234567
+                01/15/1980
+                USA
+                `
+
+	return os.WriteFile(path, []byte(content), 0644)
+}
+func createCSVFile(path string) error {
+	content := "Card Number,Expiry,CVV,Name\n" +
+		"4532-1234-5678-9010,12/27,123,John Doe\n"
+
+	return os.WriteFile(path, []byte(content), 0644)
+}
+func createXLSXFile(path string) error {
+	f := excelize.NewFile()
+	sheet := f.GetSheetName(0)
+
+	f.SetCellValue(sheet, "A1", "Passport Number")
+	f.SetCellValue(sheet, "B1", "Name")
+	f.SetCellValue(sheet, "C1", "DOB")
+
+	f.SetCellValue(sheet, "A2", "AB1234567")
+	f.SetCellValue(sheet, "B2", "John Doe")
+	f.SetCellValue(sheet, "C2", "01/15/1980")
+
+	return f.SaveAs(path)
 }
