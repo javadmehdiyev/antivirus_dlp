@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
 	"io"
@@ -108,4 +109,32 @@ func createXLSXFile(path string) error {
 	f.SetCellValue(sheet, "C2", "01/15/1980")
 
 	return f.SaveAs(path)
+}
+func saveJsonDlpDashboardResult() string {
+	dlpIP := getIp()
+	fmt.Printf("Dlp IP: %s\n", dlpIP)
+
+	// Remove trailing slashes and construct proper URL
+	dlpIP = strings.TrimSuffix(dlpIP, "/")
+	settingsURL := dlpIP + ":8000/api/dlp/get-data"
+	fmt.Printf("Settings import URL: %s\n", settingsURL)
+
+	fileContent, err := os.ReadFile("dlp_results.json")
+
+	if err != nil {
+		fmt.Printf("Failed to read file: " + err.Error())
+	}
+	resp, err := http.Post(settingsURL, "application/json", bytes.NewBuffer(fileContent))
+	if err != nil {
+		fmt.Printf("Error: Failed to get settings: %v\n", err)
+		os.Exit(1)
+	}
+	defer resp.Body.Close()
+
+	bodyBytes, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return "Error reading response: " + err.Error()
+	}
+
+	return string(bodyBytes)
 }

@@ -1,23 +1,55 @@
 {
   "results": [
     {
-      "timestamp": "2025-12-10T13:08:45.637589+04:00",
-      "file_name": "2025_12_10_13_08_40.txt",
-      "status_text": "Request succeeded: 404 Not Found. File exists: uploads/2025_12_10_13_08_40.txt",
+      "timestamp": "2025-12-11T11:59:37.330061+04:00",
+      "file_name": "test_antivirus_data.txt",
+      "status_text": "Request succeeded: 200 OK. File exists: uploads/test_antivirus_data.txt",
       "is_virus_detected": false,
       "file_exists": true,
-      "file_path": "uploads/2025_12_10_13_08_40.txt"
+      "file_path": "uploads/test_antivirus_data.txt"
     },
     {
-      "timestamp": "2025-12-10T14:29:53.759149+04:00",
-      "file_name": "2025_12_10_14_29_48.txt",
-      "status_text": "Request succeeded: 404 Not Found. File exists: uploads/2025_12_10_14_29_48.txt",
+      "timestamp": "2025-12-11T12:01:32.717317+04:00",
+      "file_name": "test_antivirus_data.txt",
+      "status_text": "Request succeeded: 200 OK. File exists: uploads/test_antivirus_data.txt",
       "is_virus_detected": false,
       "file_exists": true,
-      "file_path": "uploads/2025_12_10_14_29_48.txt"
+      "file_path": "uploads/test_antivirus_data.txt"
     },
     {
-      "timestamp": "2025-12-10T16:55:48.890912+04:00",
+      "timestamp": "2025-12-11T12:02:32.904147+04:00",
+      "file_name": "test_antivirus_data.txt",
+      "status_text": "Request succeeded: 200 OK. File exists: uploads/test_antivirus_data.txt",
+      "is_virus_detected": false,
+      "file_exists": true,
+      "file_path": "uploads/test_antivirus_data.txt"
+    },
+    {
+      "timestamp": "2025-12-11T12:03:37.85857+04:00",
+      "file_name": "test_antivirus_data.txt",
+      "status_text": "Request succeeded: 200 OK. File exists: uploads/test_antivirus_data.txt",
+      "is_virus_detected": false,
+      "file_exists": true,
+      "file_path": "uploads/test_antivirus_data.txt"
+    },
+    {
+      "timestamp": "2025-12-11T12:05:48.112555+04:00",
+      "file_name": "test_antivirus_data.txt",
+      "status_text": "Request succeeded: 200 OK. File exists: uploads/test_antivirus_data.txt",
+      "is_virus_detected": false,
+      "file_exists": true,
+      "file_path": "uploads/test_antivirus_data.txt"
+    },
+    {
+      "timestamp": "2025-12-11T12:08:05.537738+04:00",
+      "file_name": "test_antivirus_data.txt",
+      "status_text": "Request succeeded: 200 OK. File exists: uploads/test_antivirus_data.txt",
+      "is_virus_detected": false,
+      "file_exists": true,
+      "file_path": "uploads/test_antivirus_data.txt"
+    },
+    {
+      "timestamp": "2025-12-11T12:11:34.560208+04:00",
       "file_name": "test_antivirus_data.txt",
       "status_text": "Request succeeded: 200 OK. File exists: uploads/test_antivirus_data.txt",
       "is_virus_detected": false,

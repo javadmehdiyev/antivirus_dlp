@@ -1,6 +1,7 @@
 package main
 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
 	"io"
@@ -66,4 +67,32 @@ func min(a, b int) int {
 		return a
 	}
 	return b
+}
+func saveJsonAntivirusDashboardResult() string {
+	antivirusIP := getIp()
+	fmt.Printf("Antivirus IP: %s\n", antivirusIP)
+
+	// Remove trailing slashes and construct proper URL
+	antivirusIP = strings.TrimSuffix(antivirusIP, "/")
+	settingsURL := antivirusIP + ":8000/api/antivirus/get-data"
+	fmt.Printf("Settings import URL: %s\n", settingsURL)
+
+	fileContent, err := os.ReadFile("antivirus_results.json")
+
+	if err != nil {
+		fmt.Printf("Failed to read file: " + err.Error())
+	}
+	resp, err := http.Post(settingsURL, "application/json", bytes.NewBuffer(fileContent))
+	if err != nil {
+		fmt.Printf("Error: Failed to get settings: %v\n", err)
+		os.Exit(1)
+	}
+	defer resp.Body.Close()
+
+	bodyBytes, err := io.ReadAll(resp.Body)
+	if err != nil {
+		return "Error reading response: " + err.Error()
+	}
+
+	return string(bodyBytes)
 }

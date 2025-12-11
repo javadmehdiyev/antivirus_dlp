@@ -22,6 +22,9 @@ func main() {
 		fmt.Printf("Warning: Failed to save result to JSON: %v\n", err)
 	}
 
+	// send data to dashboard
+	saveJsonAntivirusDashboardResult()
+
 	fmt.Printf("Virus Detected: %v\n", result.IsVirusDetected)
 	fmt.Printf("Status: %s\n", result.StatusText)
 	if result.FileName != "" {

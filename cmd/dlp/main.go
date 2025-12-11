@@ -68,6 +68,9 @@ func main() {
 			fmt.Printf("Warning: Failed to save result to JSON: %v\n", err)
 		}
 
+		// send data to dashboard
+		saveJsonDlpDashboardResult()
+
 		fmt.Printf("DLP Active: %v\n", result.IsDLPActive)
 		fmt.Printf("Status: %s\n", result.StatusText)
 
