@@ -22,11 +22,6 @@ type SettingsData struct {
 	URLAntivirus string `json:"url_antivirus"`
 }
 
-func getIp() string {
-	var AntivirusIP = "http://127.0.0.1"
-	return AntivirusIP
-}
-
 func getAntivirusURL() string {
 	antivirusIP := getIp()
 	fmt.Printf("Antivirus IP: %s\n", antivirusIP)
@@ -219,4 +214,6 @@ func createXLSXFile(path string) error {
 
 	return f.SaveAs(path)
 }
+
+
 

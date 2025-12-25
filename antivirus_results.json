@@ -71,6 +71,14 @@
       "is_virus_detected": false,
       "file_exists": true,
       "file_path": "uploads/test_antivirus_data.txt"
+    },
+    {
+      "timestamp": "2025-12-25T11:43:46.249151+04:00",
+      "file_name": "test_antivirus_data.txt",
+      "status_text": "Request succeeded: 200 OK. File exists: uploads/test_antivirus_data.txt",
+      "is_virus_detected": false,
+      "file_exists": true,
+      "file_path": "uploads/test_antivirus_data.txt"
     }
   ]
 }
