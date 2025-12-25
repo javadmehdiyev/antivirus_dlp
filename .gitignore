@@ -1,0 +1,67 @@
+# Binaries for programs and plugins
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Test binary, built with `go test -c`
+*.test
+
+# Output of the go coverage tool
+*.out
+
+# Dependency directories
+vendor/
+
+# Go workspace file
+go.work
+
+# Build artifacts
+agent
+agent-linux
+agent-macos
+agent.exe
+antivirus
+antivirus.exe
+antivirus-linux
+antivirus-macos
+dlp
+dlp.exe
+dlp-linux
+dlp-macos
+
+# Result files
+*_results.json
+antivirus_results.json
+dlp_results.json
+
+# Test files
+test_*.txt
+test_*.csv
+test_*.xlsx
+
+# Uploads directory
+uploads/
+uploads/*
+
+# IDE files
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Environment files
+.env
+.env.local
+
+# Logs
+*.log
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+
