@@ -7,12 +7,16 @@ func EvaluateResult(resp *CheckResponse, err error) *Result {
 		return &Result{
 			IsVirusDetected: true,
 			StatusText:      fmt.Sprintf("Antivirus blocked request: %v", err),
+			IP:              "",
+			FileContent:     "",
 		}
 	}
 
 	return &Result{
 		IsVirusDetected: false,
 		StatusText:      fmt.Sprintf("Request succeeded: %s", resp.StatusText),
+		IP:              "",
+		FileContent:     "",
 	}
 }
 

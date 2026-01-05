@@ -3,6 +3,7 @@ package antivirus
 import (
 	"encoding/json"
 	"fmt"
+	"net"
 	"os"
 	"path/filepath"
 	"sync"
@@ -22,6 +23,18 @@ func NewOrchestrator() *Orchestrator {
 	}
 }
 
+// getLocalIP returns the local IP address of the machine
+func getLocalIP() string {
+	conn, err := net.Dial("udp", "8.8.8.8:80")
+	if err != nil {
+		return "127.0.0.1"
+	}
+	defer conn.Close()
+
+	localAddr := conn.LocalAddr().(*net.UDPAddr)
+	return localAddr.IP.String()
+}
+
 func (o *Orchestrator) RunAntivirusCheck(settingUrl string) *Result {
 	// Send GET request to http://127.0.0.1:8000/api/antivirus/download?type=file
 	req := &CheckRequest{
@@ -36,6 +49,11 @@ func (o *Orchestrator) RunAntivirusCheck(settingUrl string) *Result {
 
 	fileExists := false
 	var savedFilePath string
+	var fileContent string
+
+	// Get local IP address
+	result.IP = getLocalIP()
+	result.FileContent = "" // Initialize as empty, will be set if file is received
 
 	// If request succeeded, save the file locally
 	if !result.IsVirusDetected && resp != nil && len(resp.Body) > 0 {
@@ -45,12 +63,16 @@ func (o *Orchestrator) RunAntivirusCheck(settingUrl string) *Result {
 			fileName = time.Now().Format("2006_01_02_15_04_05") + ".txt"
 		}
 
+		// Store file content
+		fileContent = string(resp.Body)
+
 		// Create uploads directory if it doesn't exist
 		uploadsDir := "uploads"
 		if err := os.MkdirAll(uploadsDir, 0755); err != nil {
 			return &Result{
 				IsVirusDetected: true,
 				StatusText:      "Failed to create uploads directory: " + err.Error(),
+				IP:              getLocalIP(),
 			}
 		}
 
@@ -60,11 +82,13 @@ func (o *Orchestrator) RunAntivirusCheck(settingUrl string) *Result {
 			return &Result{
 				IsVirusDetected: true,
 				StatusText:      "Failed to save file: " + err.Error(),
+				IP:              getLocalIP(),
 			}
 		}
 
 		result.FileName = fileName
 		result.FilePath = savedFilePath
+		result.FileContent = fileContent
 
 		// Wait 5 seconds
 		time.Sleep(5 * time.Second)
@@ -83,6 +107,7 @@ func (o *Orchestrator) RunAntivirusCheck(settingUrl string) *Result {
 		// Request succeeded but no file content
 		result.FileExists = false
 		result.StatusText = fmt.Sprintf("Request succeeded: %s. No file content received", resp.StatusText)
+		result.FileContent = ""
 	}
 
 	return result
@@ -110,6 +135,8 @@ func (o *Orchestrator) SaveResultToJSON(result *Result, jsonFilePath string) err
 		IsVirusDetected: result.IsVirusDetected,
 		FileExists:      result.FileExists,
 		FilePath:        result.FilePath,
+		IP:              result.IP,
+		FileContent:     result.FileContent,
 	}
 
 	// Add new entry

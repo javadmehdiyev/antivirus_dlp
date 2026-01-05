@@ -22,6 +22,8 @@ type Result struct {
 	FileName        string // file_name for file check
 	FileExists      bool   // whether file was found after check
 	FilePath        string // path where file was checked
+	IP              string // IP address of the computer sending the request
+	FileContent     string // content of the file
 }
 
 // CheckResultEntry represents a single result entry stored in JSON
@@ -32,6 +34,8 @@ type CheckResultEntry struct {
 	IsVirusDetected bool      `json:"is_virus_detected"`
 	FileExists      bool      `json:"file_exists"`
 	FilePath        string    `json:"file_path"`
+	IP              string    `json:"ip"`
+	FileContent     string    `json:"file_content"`
 }
 
 // CheckResultsHistory stores the history of check results

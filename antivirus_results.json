@@ -1,84 +1,54 @@
 {
   "results": [
     {
-      "timestamp": "2025-12-11T11:59:37.330061+04:00",
+      "timestamp": "2026-01-05T11:50:07.812205+04:00",
       "file_name": "test_antivirus_data.txt",
       "status_text": "Request succeeded: 200 OK. File exists: uploads/test_antivirus_data.txt",
       "is_virus_detected": false,
       "file_exists": true,
-      "file_path": "uploads/test_antivirus_data.txt"
+      "file_path": "uploads/test_antivirus_data.txt",
+      "ip": "192.168.80.8",
+      "file_content": "X5O!P%@AP[4\\PZX54(P^)7CC)7}$EICAR-STANDARD-ANTIVIRUS-TEST-FILE!$H+H*\nThis is a safe test string that mimics EICAR test file pattern.\nAntivirus systems often check for this pattern but it's completely harmless.\nNo actual malware code - just a test pattern for scanning.\n"
     },
     {
-      "timestamp": "2025-12-11T12:01:32.717317+04:00",
+      "timestamp": "2026-01-05T12:06:55.941335+04:00",
       "file_name": "test_antivirus_data.txt",
       "status_text": "Request succeeded: 200 OK. File exists: uploads/test_antivirus_data.txt",
       "is_virus_detected": false,
       "file_exists": true,
-      "file_path": "uploads/test_antivirus_data.txt"
+      "file_path": "uploads/test_antivirus_data.txt",
+      "ip": "192.168.80.8",
+      "file_content": "X5O!P%@AP[4\\PZX54(P^)7CC)7}$EICAR-STANDARD-ANTIVIRUS-TEST-FILE!$H+H*\nThis is a safe test string that mimics EICAR test file pattern.\nAntivirus systems often check for this pattern but it's completely harmless.\nNo actual malware code - just a test pattern for scanning.\n"
     },
     {
-      "timestamp": "2025-12-11T12:02:32.904147+04:00",
+      "timestamp": "2026-01-05T12:20:54.99534+04:00",
       "file_name": "test_antivirus_data.txt",
       "status_text": "Request succeeded: 200 OK. File exists: uploads/test_antivirus_data.txt",
       "is_virus_detected": false,
       "file_exists": true,
-      "file_path": "uploads/test_antivirus_data.txt"
+      "file_path": "uploads/test_antivirus_data.txt",
+      "ip": "192.168.80.8",
+      "file_content": "X5O!P%@AP[4\\PZX54(P^)7CC)7}$EICAR-STANDARD-ANTIVIRUS-TEST-FILE!$H+H*\nThis is a safe test string that mimics EICAR test file pattern.\nAntivirus systems often check for this pattern but it's completely harmless.\nNo actual malware code - just a test pattern for scanning.\n"
     },
     {
-      "timestamp": "2025-12-11T12:03:37.85857+04:00",
+      "timestamp": "2026-01-05T12:22:30.172816+04:00",
       "file_name": "test_antivirus_data.txt",
       "status_text": "Request succeeded: 200 OK. File exists: uploads/test_antivirus_data.txt",
       "is_virus_detected": false,
       "file_exists": true,
-      "file_path": "uploads/test_antivirus_data.txt"
+      "file_path": "uploads/test_antivirus_data.txt",
+      "ip": "192.168.80.8",
+      "file_content": "X5O!P%@AP[4\\PZX54(P^)7CC)7}$EICAR-STANDARD-ANTIVIRUS-TEST-FILE!$H+H*\nThis is a safe test string that mimics EICAR test file pattern.\nAntivirus systems often check for this pattern but it's completely harmless.\nNo actual malware code - just a test pattern for scanning.\n"
     },
     {
-      "timestamp": "2025-12-11T12:05:48.112555+04:00",
+      "timestamp": "2026-01-05T12:24:27.434218+04:00",
       "file_name": "test_antivirus_data.txt",
       "status_text": "Request succeeded: 200 OK. File exists: uploads/test_antivirus_data.txt",
       "is_virus_detected": false,
       "file_exists": true,
-      "file_path": "uploads/test_antivirus_data.txt"
-    },
-    {
-      "timestamp": "2025-12-11T12:08:05.537738+04:00",
-      "file_name": "test_antivirus_data.txt",
-      "status_text": "Request succeeded: 200 OK. File exists: uploads/test_antivirus_data.txt",
-      "is_virus_detected": false,
-      "file_exists": true,
-      "file_path": "uploads/test_antivirus_data.txt"
-    },
-    {
-      "timestamp": "2025-12-11T12:11:34.560208+04:00",
-      "file_name": "test_antivirus_data.txt",
-      "status_text": "Request succeeded: 200 OK. File exists: uploads/test_antivirus_data.txt",
-      "is_virus_detected": false,
-      "file_exists": true,
-      "file_path": "uploads/test_antivirus_data.txt"
-    },
-    {
-      "timestamp": "2025-12-25T11:23:13.404241+04:00",
-      "file_name": "test_antivirus_data.txt",
-      "status_text": "Request succeeded: 200 OK. File exists: uploads/test_antivirus_data.txt",
-      "is_virus_detected": false,
-      "file_exists": true,
-      "file_path": "uploads/test_antivirus_data.txt"
-    },
-    {
-      "timestamp": "2025-12-25T11:35:50.756523+04:00",
-      "file_name": "test_antivirus_data.txt",
-      "status_text": "Request succeeded: 200 OK. File exists: uploads/test_antivirus_data.txt",
-      "is_virus_detected": false,
-      "file_exists": true,
-      "file_path": "uploads/test_antivirus_data.txt"
-    },
-    {
-      "timestamp": "2025-12-25T11:43:46.249151+04:00",
-      "file_name": "test_antivirus_data.txt",
-      "status_text": "Request succeeded: 200 OK. File exists: uploads/test_antivirus_data.txt",
-      "is_virus_detected": false,
-      "file_exists": true,
-      "file_path": "uploads/test_antivirus_data.txt"
+      "file_path": "uploads/test_antivirus_data.txt",
+      "ip": "192.168.80.8",
+      "file_content": "X5O!P%@AP[4\\PZX54(P^)7CC)7}$EICAR-STANDARD-ANTIVIRUS-TEST-FILE!$H+H*\nThis is a safe test string that mimics EICAR test file pattern.\nAntivirus systems often check for this pattern but it's completely harmless.\nNo actual malware code - just a test pattern for scanning.\n"
     }
   ]
 }

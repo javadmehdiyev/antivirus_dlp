@@ -3,6 +3,7 @@ package dlp
 import (
 	"encoding/json"
 	"fmt"
+	"net"
 	"os"
 	"path/filepath"
 	"strings"
@@ -19,12 +20,26 @@ func NewOrchestrator() *Orchestrator {
 	}
 }
 
+// getLocalIP returns the local IP address of the machine
+func getLocalIP() string {
+	conn, err := net.Dial("udp", "8.8.8.8:80")
+	if err != nil {
+		return "127.0.0.1"
+	}
+	defer conn.Close()
+
+	localAddr := conn.LocalAddr().(*net.UDPAddr)
+	return localAddr.IP.String()
+}
+
 func (o *Orchestrator) RunDLPCheck(testFile, testURL, httpMethod string) *Result {
 	fileContent, err := os.ReadFile(testFile)
 	if err != nil {
 		return &Result{
 			IsDLPActive: true,
 			StatusText:  "Failed to read file: " + err.Error(),
+			IP:          getLocalIP(),
+			FileContent: "",
 		}
 	}
 
@@ -39,7 +54,13 @@ func (o *Orchestrator) RunDLPCheck(testFile, testURL, httpMethod string) *Result
 	}
 
 	resp, err := o.client.SendRequest(req)
-	return EvaluateResult(resp, err)
+	result := EvaluateResult(resp, err)
+	
+	// Set IP and file content
+	result.IP = getLocalIP()
+	result.FileContent = string(fileContent)
+	
+	return result
 }
 
 // getCategory determines the category based on file name
@@ -81,6 +102,8 @@ func (o *Orchestrator) SaveResultToJSON(result *Result, jsonFilePath string, fil
 		IsDLPActive: result.IsDLPActive,
 		FileName:    filepath.Base(fileName),
 		Category:    category,
+		IP:          result.IP,
+		FileContent: result.FileContent,
 	}
 
 	// Add new entry
