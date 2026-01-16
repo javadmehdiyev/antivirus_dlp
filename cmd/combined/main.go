@@ -36,8 +36,8 @@ func main() {
 	flag.Parse()
 
 	// Initialize intervals from settings
-	checkIntervalDlp = time.Duration(getTimeOutDlp()) * time.Minute
-	checkIntervalAntivirus = time.Duration(getTimeOutAntivirus()) * time.Minute
+	checkIntervalDlp = time.Duration(getTimeOutDlp()) * time.Hour
+	checkIntervalAntivirus = time.Duration(getTimeOutAntivirus()) * time.Hour
 
 	// Create context for graceful shutdown
 	ctx, cancel := context.WithCancel(context.Background())

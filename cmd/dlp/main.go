@@ -34,7 +34,7 @@ func main() {
 	flag.Parse()
 
 	// Initialize interval from settings
-	checkIntervalDlp = time.Duration(getTimeOutDlp()) * time.Minute
+	checkIntervalDlp = time.Duration(getTimeOutDlp()) * time.Hour
 
 	// Prepare files list
 	dlpFiles := prepareDLPFiles(files)
