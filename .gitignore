@@ -22,14 +22,14 @@ agent
 agent-linux
 agent-macos
 agent.exe
-antivirus
-antivirus.exe
-antivirus-linux
-antivirus-macos
-dlp
-dlp.exe
-dlp-linux
-dlp-macos
+/antivirus
+/antivirus.exe
+/antivirus-linux
+/antivirus-macos
+/dlp
+/dlp.exe
+/dlp-linux
+/dlp-macos
 
 # Result files
 *_results.json
